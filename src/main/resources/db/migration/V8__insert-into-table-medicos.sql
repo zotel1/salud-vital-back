@@ -1,4 +1,4 @@
-DELETE FROM `$railway`.`medicos`;
+DELETE FROM `railway`.`medicos`;
 
 
 INSERT INTO `railway`.`medicos` (`id`, `nombre`, `email`, `documento`, `especialidad`, `calle`, `distrito`, `complemento`, `numero`, `ciudad`, `telefono`, `activo`)
