@@ -16,18 +16,4 @@ public class SaludVitalAppApplication {
 
 
 }
-@Configuration
-public static Myconfiguration {
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer () {
-		return new WebMvcConfigurer() {
-
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATH");
-			}
-		};
-	}
-}
