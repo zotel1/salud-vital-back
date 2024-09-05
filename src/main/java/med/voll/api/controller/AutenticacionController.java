@@ -8,6 +8,7 @@ import med.voll.api.domain.usuarios.Usuario;
 import med.voll.api.infra.security.DatosJWTToken;
 import med.voll.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,8 +24,11 @@ public class AutenticacionController {
     @Autowired
     private TokenService tokenService;
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<DatosJWTToken> autenticarUsuario(@AuthenticationPrincipal OidcUser principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         String JWTtoken = tokenService.generarToken(principal);
         return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
     }
