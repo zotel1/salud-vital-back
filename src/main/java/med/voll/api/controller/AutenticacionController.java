@@ -1,36 +1,39 @@
 package med.voll.api.controller;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import med.voll.api.domain.usuarios.DatosAutenticacionUsuario;
-import med.voll.api.domain.usuarios.Usuario;
-import med.voll.api.infra.security.DatosJWTToken;
-import med.voll.api.infra.security.TokenService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/login")
+@Tag(name = "Autenticacion", description = "Autentica al usuario sin generar un token")
 public class AutenticacionController {
 
     @Autowired
-    private TokenService tokenService;
+    private AuthenticationManager authenticationManager;
 
     @PostMapping
-    public ResponseEntity<DatosJWTToken> autenticarUsuario(@AuthenticationPrincipal OidcUser principal) {
-        if (principal == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<String> autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
+        Authentication authToken = new UsernamePasswordAuthenticationToken(datosAutenticacionUsuario.login(),
+                datosAutenticacionUsuario.clave());
+        Authentication usuarioAutenticado = authenticationManager.authenticate(authToken);
+
+        // Retornar una respuesta indicando éxito sin generar un token
+        if (usuarioAutenticado.isAuthenticated()) {
+            return ResponseEntity.ok("Usuario autenticado exitosamente.");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Autenticación fallida.");
         }
-        String JWTtoken = tokenService.generarToken(principal);
-        return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
     }
 }
 

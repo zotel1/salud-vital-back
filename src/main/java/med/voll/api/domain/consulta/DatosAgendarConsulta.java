@@ -15,4 +15,5 @@ public record DatosAgendarConsulta(
         @Future
         LocalDateTime fecha,
         Especialidad especialidad) {
+
 }
