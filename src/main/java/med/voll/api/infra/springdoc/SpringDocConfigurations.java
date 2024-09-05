@@ -18,7 +18,7 @@ public class SpringDocConfigurations {
     }
 
     @Bean
-    public void message(){
-        System.out.println("bearer is working");
+    public String message(){
+        return  "bearer is working";
     }
 }
