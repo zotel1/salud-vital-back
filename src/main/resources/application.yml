@@ -1,9 +1,9 @@
 spring:
   profile.active: dev, test, prod
   datasource:
-    url: jdbc:mysql://localhost/salud_vital
-    username: root
-    password: ${DB_PSWCAC}
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
   jpa:
     show-sql: true
     properties:
@@ -16,6 +16,7 @@ server:
 api:
   security:
     secret: ${JWT_SECRET:123456}
+
 
 auth0:
   domain: tu-dominio-auth0-com
