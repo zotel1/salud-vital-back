@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.paciente.Paciente;
+import med.voll.api.domain.usuarios.Usuario;
 
 import java.time.LocalDateTime;
 
@@ -30,7 +31,13 @@ public class Consulta {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario; // Relacion con la tabla Usuario
+
     private LocalDateTime fecha;
+    private Boolean activo;
+
 
     @Column(name = "motivo_cancelamiento")
     @Enumerated(EnumType.STRING)
