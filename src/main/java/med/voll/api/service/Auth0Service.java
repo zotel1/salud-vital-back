@@ -18,16 +18,16 @@ public class Auth0Service {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Value("${auth0.domain}")
+    @Value("${tu-dominio-auth0-com}")
     private String domain;
 
-    @Value("${auth0.clientId}")
+    @Value("${tu-client-id}")
     private String clientId;
 
-    @Value("${auth0.clientSecret}")
+    @Value("${tu-client-secret}")
     private String clientSecret;
 
-    @Value("${auth0.apiBaseUrl}")
+    @Value("${tu-dominio-auth0-com}")
     private String apiBaseUrl;
 
     public void registerUser(String email, String password) throws Exception {
@@ -90,4 +90,31 @@ public class Auth0Service {
             throw new Exception("Error al obtener el token de Auth0");
         }
     }
+
+    public String loginUser(String email, String password) throws Exception {
+        String tokenUrl = apiBaseUrl + "oauth/token";
+        RestTemplate restTemplate = new RestTemplate();
+
+        Map<String, String> body = new HashMap<>();
+        body.put("client_id", clientId);
+        body.put("client_secret", clientSecret);
+        body.put("grant_type", "password");
+        body.put("username", email);
+        body.put("password", password);
+        body.put("scope", "openid");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(body, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity(tokenUrl, request, String.class);
+
+        if (response.getStatusCode() == HttpStatus.OK) {
+            JSONObject responseBody = new JSONObject(response.getBody());
+            return responseBody.getString("access_token");
+        } else {
+            throw new Exception("Error al autenticar el usuario: " + response.getBody());
+        }
+    }
+
 }

@@ -31,7 +31,7 @@ auth0:
   clientId: ${tu-client-id}
   clientSecret: ${tu-client-secret}
   audience: ${tu-api-identifier}
-  apiBaseUrl: https://${tu-dominio-auth0-com}/
+  apiBaseUrl: https://${baseUrl}/
 
 security:
   oauth2:
@@ -41,8 +41,8 @@ security:
           client-id: ${tu-client-id}
           client-secret: ${tu-client-secret}
           scope: openid profile email
-         ## redirect-uri: "${baseUrl}/login/oauth2/code/{registrationId}"
-          redirect-uri: "${tu-dominio-auth0-com}/login/oauth2/code/{registrationId}"
+          redirect-uri: "${baseUrl}/login/oauth2/code/{registrationId}"
+         ## redirect-uri: "${tu-dominio-auth0-com}/login/oauth2/code/{registrationId}"
           authorization-grant-type: authorization_code
           client-name: Auth0
       provider:
