@@ -1,12 +1,12 @@
 spring:
   profile.active: dev, test, prod
   datasource:
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
-    #url: jdbc:mysql://localhost/railway
+    #url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    url: jdbc:mysql://localhost/railway
     username: ${DB_USER}
     #username: root
-    password: ${DB_PASSWORD}
-    #password: ${DB_PSWCAC}
+    #password: ${DB_PASSWORD}
+    password: ${DB_PSWCAC}
   jpa:
     show-sql: true
     properties:
