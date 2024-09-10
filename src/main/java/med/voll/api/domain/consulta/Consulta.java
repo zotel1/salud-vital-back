@@ -52,6 +52,4 @@ public class Consulta {
     public void cancelar(MotivoCancelamiento motivo) {
         this.motivoCancelamiento = motivo;
     }
-
-
 }
