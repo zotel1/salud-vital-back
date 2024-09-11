@@ -12,6 +12,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: ${AUTH0_ISSUER_URI}
+  web-security:
+    debug: false
 
   flyway:
     enabled: true
@@ -25,12 +32,16 @@ api:
   security:
     secret: ${JWT_SECRET:123456}
 
+web:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
+
 
 auth0:
-  domain: tu-dominio-auth0-com
-  clientId: tu-client-id
-  clientSecret: tu-client-secret
-  audience: tu-api-identifier
+  domain: ${AUTH0_DOMAIN}
+  clientId: ${CLIENT_ID}
+  clientSecret: ${CLIENT_SECRET}
+  audience: ${API_AUDIENCE}
 
 security:
   oauth2:

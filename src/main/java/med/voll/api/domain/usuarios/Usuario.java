@@ -60,4 +60,9 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Usuario(DatosAutenticacionUsuario datos) {
+        this.clave = datos.clave();
+        this.login = datos.login();
+    }
 }

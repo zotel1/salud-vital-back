@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import med.voll.api.domain.usuarios.DatosAutenticacionUsuario;
 
+import med.voll.api.infra.security.AutenticacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class AutenticacionController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    private AutenticacionService autenticacionService;
 
     @PostMapping
     public ResponseEntity<String> autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
@@ -30,6 +32,7 @@ public class AutenticacionController {
 
         // Retornar una respuesta indicando éxito sin generar un token
         if (usuarioAutenticado.isAuthenticated()) {
+            autenticacionService.crearUsuario(datosAutenticacionUsuario);
             return ResponseEntity.ok("Usuario autenticado exitosamente.");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Autenticación fallida.");

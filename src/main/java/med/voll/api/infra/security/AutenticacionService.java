@@ -1,5 +1,7 @@
 package med.voll.api.infra.security;
 
+import med.voll.api.domain.usuarios.DatosAutenticacionUsuario;
+import med.voll.api.domain.usuarios.Usuario;
 import med.voll.api.domain.usuarios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,5 +18,9 @@ public class AutenticacionService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return usuarioRepository.findByLogin(username);
+    }
+    public void crearUsuario(DatosAutenticacionUsuario datosAutenticacionUsuario){
+        Usuario usuarioRegistrar = new Usuario(datosAutenticacionUsuario);
+        usuarioRepository.save(usuarioRegistrar);
     }
 }
