@@ -30,7 +30,13 @@ public class Consulta {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario; // Relacion con la tabla Usuario
+
     private LocalDateTime fecha;
+    private Boolean activo;
+
 
     @Column(name = "motivo_cancelamiento")
     @Enumerated(EnumType.STRING)
@@ -45,6 +51,4 @@ public class Consulta {
     public void cancelar(MotivoCancelamiento motivo) {
         this.motivoCancelamiento = motivo;
     }
-
-
 }
